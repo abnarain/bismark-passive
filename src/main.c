@@ -172,6 +172,10 @@ static void process_packet(
         u_char* const user,
         const struct pcap_pkthdr* const header,
         const u_char* const bytes) {
+static int l=0;
+if (l++ %1000 ==0)
+	printf("pkts count =%d\n",l);
+#if 0	
   if (sigprocmask(SIG_BLOCK, &block_set, NULL) < 0) {
     perror("sigprocmask");
     exit(1);
@@ -267,6 +271,7 @@ static void process_packet(
     perror("sigprocmask");
     exit(1);
   }
+#endif 
 }
 
 #ifndef DISABLE_FLOW_THRESHOLDING
@@ -497,10 +502,12 @@ static pcap_t* initialize_pcap(const char* const interface) {
     fprintf(stderr, "Couldn't open device %s: %s\n", interface, errbuf);
     return NULL;
   }
+/*want to sniff on packet on wireless monitor interface in 
+abhinav's case 
   if (pcap_datalink(handle) != DLT_EN10MB) {
     fprintf(stderr, "Must capture on an Ethernet link\n");
     return NULL;
-  }
+  } */
   return handle;
 }
 
@@ -576,6 +583,7 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "Usage: %s <interface> [whitelist]\n", argv[0]);
     return 1;
   }
+  printf("this is abhinav's version of bismark-passive\n");
 
   struct timeval start_timeval;
   gettimeofday(&start_timeval, NULL);
