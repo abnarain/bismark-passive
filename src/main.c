@@ -497,7 +497,7 @@ static void initialize_signal_handler() {
 static pcap_t* initialize_pcap(const char* const interface) {
   char errbuf[PCAP_ERRBUF_SIZE];
   pcap_t* const handle = pcap_open_live(
-      interface, BUFSIZ, 1, PCAP_TIMEOUT_MILLISECONDS, errbuf);
+      interface, 300+50, 1, PCAP_TIMEOUT_MILLISECONDS, errbuf);
   if (!handle) {
     fprintf(stderr, "Couldn't open device %s: %s\n", interface, errbuf);
     return NULL;
